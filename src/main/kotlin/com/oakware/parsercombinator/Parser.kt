@@ -147,7 +147,12 @@ val keyValueParser = zip(
     KeyValue(key, value)
 }
 
-val linebreak = literal('\n')
+fun <A> optional(a: Parser<A>): Parser<Unit> = Parser {
+    a(it)
+    Unit
+}
+
+val linebreak = optional(literal('\n'))
 
 val keyValueRowParser =
     zip(keyValueParser, linebreak)

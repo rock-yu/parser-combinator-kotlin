@@ -127,8 +127,7 @@ class ParserTest {
     @Test
     fun linebreak() {
         val input = MutableString("\nXY")
-        val output = linebreak(input)
-        assertEquals('\n', output)
+        linebreak(input)
         assertEquals("XY", input.stringWrapped)
     }
 
@@ -141,12 +140,18 @@ class ParserTest {
     }
 
     @Test
+    fun keyValueRowParserShouldTreatLineBreakOptional() {
+        val input = MutableString("height:100")
+        val output = keyValueRowParser(input)
+        assertEquals(KeyValue("height", 100), output)
+    }
+
+    @Test
     fun multiLineParser() {
         val configStr = """
             height:100
             width:50
             depth:12
-            
             """.trimIndent()
 
         val input = MutableString(configStr)
